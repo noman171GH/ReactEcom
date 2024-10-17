@@ -1,5 +1,9 @@
-import React from "react";
+import React from 'react'
 
-export const TopNavbar = () => {
-  return <div>TopNavbar</div>;
-};
+const TopNavbar = () => {
+  return (
+    <div>TopNavbar</div>
+  )
+}
+
+export default TopNavbar

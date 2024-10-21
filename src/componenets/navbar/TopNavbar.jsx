@@ -1,7 +1,7 @@
 // React libs--------------------------------------------------------
 import React, { Fragment, useContext, useState } from "react";
 import { Link } from "react-router-dom";
-import myContext from "../../context/data/myContext";
+import MyContext from "../../context/data/MyContext";
 // ---------------------------------------------------------------------
 
 // Libs for headlessui and react-icons
@@ -15,7 +15,7 @@ import { RxCross2 } from "react-icons/rx";
 const TopNavbar = () => {
   const [open, setOpen] = useState(false);
 
-  const context = useContext(myContext);
+  const context = useContext(MyContext);
   const { toggleMode, mode } = context;
 
   return (

@@ -5,6 +5,8 @@ import Layout from "../../componenets/layout/Layout";
 import { HeroSection } from "../../componenets/heroSection/HeroSection";
 import Filter from "../../componenets/filter/Filter";
 import ProductCard from "../../componenets/productCard/ProductCard";
+import Track from "../../componenets/track/Track";
+import Testimonial from "../../componenets/testimonial/Testimonial";
 
 function Home() {
   //const context = useContext(MyContext);
@@ -32,6 +34,8 @@ function Home() {
       <HeroSection></HeroSection>
       <Filter />
       <ProductCard />
+      <Track></Track>
+      <Testimonial></Testimonial>
 
       {/* <h1>Home</h1> */}
     </Layout>

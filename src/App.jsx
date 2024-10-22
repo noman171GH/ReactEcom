@@ -8,6 +8,9 @@ import AllProducts from "./pages/allproducts/AllProducts";
 import Order from "./pages/order/Order";
 import Cart from "./pages/cart/Cart";
 import Dashboard from "./pages/admin/dashboard/Dashboard";
+import AddProduct from "./pages/admin/pages/AddProduct";
+import UpdateProduct from "./pages/admin/pages/UpdateProduct";
+
 import Login from "./pages/registration/Login";
 import Signup from "./pages/registration/Signup";
 import ProductInfo from "./pages/productInfo/ProductInfo";
@@ -26,6 +29,8 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/addproduct" element={<AddProduct />} />
+          <Route path="/updateproduct" element={<UpdateProduct />} />
           <Route path="/productinfo/:id" element={<ProductInfo />} />
 
           <Route path="/*" element={<NoPage />} />

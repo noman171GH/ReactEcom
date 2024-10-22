@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import MyContext from "../../context/data/MyContext";
 import Layout from "../../componenets/layout/Layout";
+import Modal from "../../componenets/modal/Modal";
 
 function Cart() {
   const context = useContext(MyContext);
@@ -128,13 +129,13 @@ function Cart() {
                 </p>
               </div>
             </div>
-            {/* <Modal  /> */}
-            <button
+            <Modal />
+            {/* <button
               type="button"
               className="w-full  bg-pink-600 py-2 text-center rounded-lg text-white font-bold "
             >
               Buy Now
-            </button>
+            </button> */}
           </div>
         </div>
       </div>

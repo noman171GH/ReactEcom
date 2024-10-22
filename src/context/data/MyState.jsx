@@ -13,7 +13,7 @@ function MyState(props) {
   //-----------------------------------------------------------------------------------------------------------------------
 
   // ----------------  for dark and light theme of WS-------------------------------------------------------------
-  const [mode, setMode] = useState("dark");
+  const [mode, setMode] = useState("light");
   // bydefault it will be in light mode
   const toggleMode = () => {
     if (mode === "light") {

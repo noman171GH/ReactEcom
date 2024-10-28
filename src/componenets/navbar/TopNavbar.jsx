@@ -1,12 +1,12 @@
 // React libs--------------------------------------------------------
 import React, { Fragment, useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import MyContext from "../../context/data/MyContext";
+import { useSelector } from "react-redux";
 // ---------------------------------------------------------------------
 
-// Libs for headlessui and react-icons
-import { Dialog } from "@headlessui/react";
-import { Transition } from "@headlessui/react";
+// --------------Libs for headlessui and react-icons-----------------------
+import { Dialog, Transition } from "@headlessui/react";
 import { BsFillCloudSunFill } from "react-icons/bs";
 import { FiSun } from "react-icons/fi";
 import { RxCross2 } from "react-icons/rx";
@@ -17,6 +17,25 @@ const TopNavbar = () => {
 
   const context = useContext(MyContext);
   const { toggleMode, mode } = context;
+
+  // --------------------------------checking user/Admin--------------------------------------------------------------------------------------------------
+
+  const user = JSON.parse(localStorage.getItem("user"));
+  console.log(user);
+
+  // When receiving data from a web server, the data is always a string. Parse the data with JSON.parse(), and the data becomes a JavaScript object.
+  // https://www.w3schools.com/js/js_json_parse.asp
+  // We check status of user ... Admin OR user
+
+  // -------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+  // --------------------clear the local storage and go to home--------------------------------------------------------
+  const logout = () => {
+    localStorage.clear("user");
+    window.location.href = "/";
+    //window.location.href = "/login";
+  };
+  // -------------------------------------------------------------------------------------------------------------------
 
   return (
     <div className="bg-white sticky top-0 z-50  ">
@@ -70,34 +89,62 @@ const TopNavbar = () => {
                   >
                     All Products
                   </Link>
-                  <div className="flow-root">
-                    <Link
-                      to={"/order"}
-                      style={{ color: mode === "dark" ? "white" : "" }}
-                      className="-m-2 block p-2 font-medium text-gray-900"
-                    >
-                      Order
-                    </Link>
-                  </div>
+                  {/* ----------------- (Mobile)so if its User , it will show Order link otherwise no.... -------------------*/}
+                  {user ? (
+                    <div className="flow-root">
+                      <Link
+                        to={"/order"}
+                        style={{ color: mode === "dark" ? "white" : "" }}
+                        className="-m-2 block p-2 font-medium text-gray-900"
+                      >
+                        Order
+                      </Link>
+                    </div>
+                  ) : (
+                    ""
+                  )}
 
-                  <div className="flow-root">
-                    <Link
-                      to={"/dashboard"}
-                      className="-m-2 block p-2 font-medium text-gray-900"
-                      style={{ color: mode === "dark" ? "white" : "" }}
-                    >
-                      admin
-                    </Link>
-                  </div>
+                  {/* ---------------------------------------------------------------------------------------------------------------- */}
+                  {/* ----------------- (Mobile)so if its Admin , it will show Admin link otherwise no.... -------------------*/}
+                  {/* user?.user? we have to put this ?? sign with user.user otherwise it will not show Home http://localhost:5174/ */}
 
-                  <div className="flow-root">
-                    <a
-                      className="-m-2 block p-2 font-medium text-gray-900 cursor-pointer"
-                      style={{ color: mode === "dark" ? "white" : "" }}
-                    >
-                      Logout
-                    </a>
-                  </div>
+                  {user?.user?.email === "noman171@yahoo.com" ? (
+                    <div className="flow-root">
+                      <Link
+                        to={"/dashboard"}
+                        className="-m-2 block p-2 font-medium text-gray-900"
+                        style={{ color: mode === "dark" ? "white" : "" }}
+                      >
+                        admin
+                      </Link>
+                    </div>
+                  ) : (
+                    ""
+                  )}
+
+                  {/* --------------------------------------------------------LogOUt (Mobile)-------------------------------------------------------------- */}
+                  {user ? (
+                    <div className="flow-root">
+                      <a
+                        onClick={logout}
+                        className="-m-2 block p-2 font-medium text-gray-900 cursor-pointer"
+                        style={{ color: mode === "dark" ? "white" : "" }}
+                      >
+                        Logout
+                      </a>
+                    </div>
+                  ) : (
+                    <div className="flow-root">
+                      <Link
+                        to={"/login"}
+                        className="-m-2 block p-2 font-medium text-gray-900 cursor-pointer"
+                        style={{ color: mode === "dark" ? "white" : "" }}
+                      >
+                        Signin
+                      </Link>
+                    </div>
+                  )}
+                  {/* ------------------------------------------------------------------------------------------------------------------------------------------------ */}
                   <div className="flow-root">
                     <Link
                       to={"/"}
@@ -206,27 +253,50 @@ const TopNavbar = () => {
                   >
                     All Products
                   </Link>
-                  <Link
-                    to={"/order"}
-                    className="text-sm font-medium text-gray-700 "
-                    style={{ color: mode === "dark" ? "white" : "" }}
-                  >
-                    Order
-                  </Link>
-                  <Link
-                    to={"/dashboard"}
-                    className="text-sm font-medium text-gray-700 "
-                    style={{ color: mode === "dark" ? "white" : "" }}
-                  >
-                    Admin
-                  </Link>
+                  {user ? (
+                    <Link
+                      to={"/order"}
+                      className="text-sm font-medium text-gray-700 "
+                      style={{ color: mode === "dark" ? "white" : "" }}
+                    >
+                      Order
+                    </Link>
+                  ) : (
+                    ""
+                  )}
 
-                  <a
-                    className="text-sm font-medium text-gray-700 cursor-pointer  "
-                    style={{ color: mode === "dark" ? "white" : "" }}
-                  >
-                    Logout
-                  </a>
+                  {/* ----------------- (Desktop)so if its Admin , it will show Admin link otherwise no.... -------------------*/}
+                  {user?.user?.email === "noman171@yahoo.com" ? (
+                    <Link
+                      to={"/dashboard"}
+                      className="text-sm font-medium text-gray-700 "
+                      style={{ color: mode === "dark" ? "white" : "" }}
+                    >
+                      Admin
+                    </Link>
+                  ) : (
+                    ""
+                  )}
+                  {/* --------------------------------------------------------------------------------------------------- */}
+                  {user ? (
+                    <a
+                      onClick={logout}
+                      className="text-sm font-medium text-gray-700 cursor-pointer  "
+                      style={{ color: mode === "dark" ? "white" : "" }}
+                    >
+                      Logout
+                    </a>
+                  ) : (
+                    <div className="flow-root">
+                      <Link
+                        to={"/login"}
+                        className="-m-2 block p-2 font-medium text-gray-900 cursor-pointer"
+                        style={{ color: mode === "dark" ? "white" : "" }}
+                      >
+                        Login
+                      </Link>
+                    </div>
+                  )}
                 </div>
 
                 <div className="hidden lg:ml-8 lg:flex">

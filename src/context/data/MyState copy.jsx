@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import MyContext from "./MyContext";
 
  import { fireDB }  from "../../firebase/FirebaseConfig";
- import { Timestamp, addDoc, deleteDoc, doc,getDocs,setDoc, collection, onSnapshot, orderBy, query } from 'firebase/firestore';
+ import { Timestamp, addDoc, collection, onSnapshot, orderBy, query } from 'firebase/firestore';
  import { toast } from 'react-toastify';
 
 
@@ -141,9 +141,21 @@ const edithandle = (item) => {
 //------------------------------
 
 const updateProduct = async () => {
+  setLoading(true);
+  try {
 
+      await setDoc(doc(fireDB, 'products', products.id), products);
       toast.success("Product Updated successfully");
+      setTimeout(() => {
+          window.location.href = '/dashboard';
+      }, 800);
+      getProductData();  /// to update Tab Record
+      setLoading(false);
 
+  } catch (error) {
+      console.log(error);
+      setLoading(false);
+  }
 }
 //setDoc is used to create or update a document in a collection. If a document with the specified ID already exists, 
 //setDoc will overwrite its existing data with the new data specified in the method call. If the document doesn't exist, 
@@ -159,10 +171,11 @@ const updateProduct = async () => {
 
 
 // **********************delete product********************************
-const deleteProduct = async (items) => {
+
+const deleteProduct = async (item) => {
   setLoading(true)
   try {
-      await deleteDoc(doc(fireDB, "products", items.id))
+      await deleteDoc(doc(fireDB, 'products', item.id))
       toast.success('Product Deleted successfully')
       getProductData();
       setLoading(false)

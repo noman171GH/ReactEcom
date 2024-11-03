@@ -142,7 +142,21 @@ const edithandle = (item) => {
 
 const updateProduct = async () => {
 
-      toast.success("Product Updated successfully");
+  setLoading(true)
+  try {
+
+      await setDoc(doc(fireDB, 'products', products.id), products)
+      toast.success("Product Updated successfully")
+      setTimeout(() => {
+          window.location.href = '/dashboard'
+      }, 800);
+      getProductData();
+      setLoading(false)
+
+  } catch (error) {
+      console.log(error)
+      setLoading(false)
+  }
 
 }
 //setDoc is used to create or update a document in a collection. If a document with the specified ID already exists, 

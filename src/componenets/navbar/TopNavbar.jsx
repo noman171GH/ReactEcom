@@ -37,6 +37,8 @@ const TopNavbar = () => {
   };
   // -------------------------------------------------------------------------------------------------------------------
 
+  const cartItems = useSelector((state) => state.cart); // it will use to show added product in cart
+
   return (
     <div className="bg-white sticky top-0 z-50  ">
       {/* -----------------------------------------------------------Mobile -------------------------------------------------------------------------  */}
@@ -364,7 +366,9 @@ const TopNavbar = () => {
                       className="ml-2 text-sm font-medium text-gray-700 group-"
                       style={{ color: mode === "dark" ? "white" : "" }}
                     >
-                      0
+                      {/* 0 */}
+                      {cartItems.length}
+                      {/* // it will show the no of products added in Cart */}
                     </span>
                     <span className="sr-only">items in cart, view bag</span>
                   </Link>

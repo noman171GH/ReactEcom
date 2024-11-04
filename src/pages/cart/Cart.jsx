@@ -5,7 +5,7 @@ import Modal from "../../componenets/modal/Modal";
 
 function Cart() {
   const context = useContext(MyContext);
-  const { mode } = context;
+  const { mode} = context; //context is getting things from MyState.jsx. Now we are destructuring it.
 
   return (
     <Layout>

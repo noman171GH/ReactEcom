@@ -12,7 +12,7 @@ function ProductCard() {
   const Pro = [];
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart);
-  alert(cartItems);
+  // alert(cartItems);
   console.log(cartItems);
 
   // add to cart

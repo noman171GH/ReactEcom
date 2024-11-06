@@ -1,6 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
 // const initialState = []; if we put here 0 ... we can see in alert at ProductCard.jsx
-const initialState = [];
+
+const initialState = JSON.parse(localStorage.getItem('cart')) ?? [];
+
+// The nullish coalescing (??) operator is a logical operator that returns its right-hand side operand when its left-hand side operand is null or undefined,
+//  and otherwise returns its left-hand side operand. for more https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing
+
 
 export const MyCartSlice = createSlice({
 
@@ -23,3 +28,16 @@ export const MyCartSlice = createSlice({
 export const { addToCart, deleteFromCart } = MyCartSlice.actions // these actions are basically functions which we made in above reducers
 
 export default MyCartSlice.reducer;
+
+
+
+
+// *******************************TO UNDERSTAND BETTER************************************
+// const foo = 'nomi' ?? 'noman';
+// console.log(foo);
+// // Expected output: "nomi"
+
+// const baz = 'default string' ?? 42;
+// console.log(baz);
+// // Expected output: 0
+// ----------------------------------------------------------------------------------------------

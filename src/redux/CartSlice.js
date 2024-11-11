@@ -3,9 +3,20 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = JSON.parse(localStorage.getItem('cart')) ?? [];
 
+// -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 // The nullish coalescing (??) operator is a logical operator that returns its right-hand side operand when its left-hand side operand is null or undefined,
 //  and otherwise returns its left-hand side operand. for more https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing
+// its mean....
+// --------------
+// if (JSON.parse(localStorage.getItem('cart')) {
+//     const initialState = JSON.parse(localStorage.getItem('cart'));
+// }
+// else {
+//     const initialState = [];
+// }
 
+// --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 export const MyCartSlice = createSlice({
 
@@ -22,6 +33,8 @@ export const MyCartSlice = createSlice({
                     //  pop() , just to chk function is working---pop , delete an item of array
                         return state.filter(x => x.id != action.payload.id);
                                         }
+
+                // https://www.w3schools.com/jsref/jsref_filter.asp --- how filter works
     }
 })
 

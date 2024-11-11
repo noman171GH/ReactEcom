@@ -12,30 +12,43 @@ function Cart() {
 
   const dispatch = useDispatch();
 
-  const cartItems = useSelector((state) => state.cart);
+  const cartItems = useSelector((state) => state.cart); // this is the coming from slice-- cart is the name of slice
   console.log(cartItems);
-
+  // ---------------------------------------------------------------------------------------------------------------------------------------------
   const deleteCart = (item) => {
-    dispatch(deleteFromCart(item));
+    dispatch(deleteFromCart(item)); //deleteFromCart is coming from slice's reducer
     toast.success("Delete cart");
   };
 
-  useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cartItems));
-  }, [cartItems]);
+  // we are giving here useEffect so if we will delete from cart it will update the local Storage.
 
-  const [totalAmout, setTotalAmount] = useState(0);
+  const [totalAmout, setTotalAmount] = useState(0); // to calculate Total
 
   useEffect(() => {
     let temp = 0;
+    localStorage.setItem("cart", JSON.stringify(cartItems));
+
     cartItems.forEach((cartItem) => {
       temp = temp + parseInt(cartItem.price);
     });
-    setTotalAmount(temp);
+    setTotalAmount(temp); // we are updating Total Amount and with in useEffect
     console.log(temp);
   }, [cartItems]);
+  // -------------------------------------------------------------------------------------------------------------------------------------------
+  // const [totalAmout, setTotalAmount] = useState(0);
+
+  // useEffect(() => {
+  //   let temp = 0;
+  //   cartItems.forEach((cartItem) => {
+  //     temp = temp + parseInt(cartItem.price);
+  //   });
+  //   setTotalAmount(temp);  // we are updating Total Amount and with in useEffect
+  //   console.log(temp);
+  // }, [cartItems]);
 
   const shipping = parseInt(100);
+
+  // here we are using two useEffects which i think is wrong as one is enough. we can combine it
 
   const grandTotal = shipping + totalAmout;
 

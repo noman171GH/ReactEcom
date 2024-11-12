@@ -1,6 +1,5 @@
 import React from "react";
 
-
 // for windows cursor "busy"
 
 function Loader() {

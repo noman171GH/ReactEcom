@@ -5,6 +5,8 @@ import Modal from "../../componenets/modal/Modal";
 import { deleteFromCart } from "../../redux/CartSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import { addDoc, collection } from "firebase/firestore";
+import { fireDB } from "../../firebase/FirebaseConfig";
 
 function Cart() {
   const context = useContext(MyContext);
@@ -51,6 +53,70 @@ function Cart() {
   // here we are using two useEffects which i think is wrong as one is enough. we can combine it
 
   const grandTotal = shipping + totalAmout;
+
+  // *****************for Payment**************************************************************************************
+  const [name, setName] = useState("");
+  const [address, setAddress] = useState("");
+  const [pincode, setPincode] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+
+  const buyNow = async () => {
+    // validation
+    if (name === "" || address == "" || pincode == "" || phoneNumber == "") {
+      return toast.error("All fields are required", {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    } else {
+      toast.success("Payment Successful");
+      const custInfo = {
+        name,
+        address,
+        pincode,
+        phoneNumber,
+        date: new Date().toLocaleString("en-US", {
+          month: "short",
+          day: "2-digit",
+          year: "numeric",
+        }),
+      };
+      console.log(custInfo);
+
+      // ********Dummy Payment ID **********
+      const d = new Date();
+      const paymentId = d.toLocaleString();
+      //************************************
+
+      // store in firebase
+      const orderInfo = {
+        cartItems,
+        custInfo,
+        date: new Date().toLocaleString("en-US", {
+          month: "short",
+          day: "2-digit",
+          year: "numeric",
+        }),
+        email: JSON.parse(localStorage.getItem("user")).user.email, 
+        userid: JSON.parse(localStorage.getItem("user")).user.uid,
+        paymentId,
+      };
+
+      try {
+        const result = addDoc(collection(fireDB, "orders"), orderInfo);
+      } catch (error) {
+        console.log(error);
+      }
+      console.log(orderInfo);
+    }
+
+    //toLocaleString() returns a date as a string.. https://www.w3schools.com/jsref/jsref_tolocalestring.asp
+  };
 
   return (
     <Layout>
@@ -178,7 +244,19 @@ function Cart() {
                 </p>
               </div>
             </div>
-            <Modal />
+            {/* <Modal /> */}
+            <Modal
+              name={name}
+              address={address}
+              pincode={pincode}
+              phoneNumber={phoneNumber}
+              setName={setName}
+              setAddress={setAddress}
+              setPincode={setPincode}
+              setPhoneNumber={setPhoneNumber}
+              buyNow={buyNow}
+            />
+            {/* sending it all as Props */}
           </div>
         </div>
       </div>

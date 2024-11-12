@@ -6,14 +6,14 @@ import { fireDB } from "../../firebase/FirebaseConfig";
 import {
   Timestamp,
   addDoc,
+  collection,
   deleteDoc,
   doc,
   getDocs,
-  setDoc,
-  collection,
   onSnapshot,
   orderBy,
   query,
+  setDoc,
 } from "firebase/firestore";
 import { toast } from "react-toastify";
 
@@ -130,6 +130,7 @@ function MyState(props) {
   useEffect(() => {
     // putting it in useEffect so we can fetch data automatically. its [] , so it will run once atlaest.
     getProductData();
+    getOrderData();
   }, []);
 
   // ************************** End of -----get product********************************
@@ -185,6 +186,63 @@ function MyState(props) {
 
   // ----------------------------End of  Product----------------------------------------------------
 
+  // ****************************************Order********************************************************
+
+  const [order, setOrder] = useState([]);
+
+  const getOrderData = async () => {
+    setLoading(true);
+    try {
+      const result = await getDocs(collection(fireDB, "orders"));
+      const ordersArray = [];
+      result.forEach((doc) => {
+        ordersArray.push(doc.data());
+        setLoading(false);
+      });
+      setOrder(ordersArray);
+      console.log(ordersArray);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
+  };
+
+  // *****************************************************************************************************
+
+  const [user, setUser] = useState([]);
+
+  const getUserData = async () => {
+    setLoading(true);
+    try {
+      const result = await getDocs(collection(fireDB, "users"));
+      const usersArray = [];
+      result.forEach((doc) => {
+        usersArray.push(doc.data());
+        setLoading(false);
+      });
+      setUser(usersArray);
+      console.log(usersArray);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getOrderData();
+    getUserData();
+  }, []);
+
+  // **************for filtera at Home Page*********************
+
+  const [searchkey, setSearchkey] = useState("");
+  const [filterType, setFilterType] = useState("");
+  const [filterPrice, setFilterPrice] = useState("");
+
+  // *******************************************************
+
   return (
     // -------Here we were testing that usestate is functional or not-----------------------------------------------------
     // <>
@@ -206,9 +264,17 @@ function MyState(props) {
           setProducts,
           addProduct,
           product,
-          edithandle,
           updateProduct,
+          edithandle,
           deleteProduct,
+          order,
+          user,
+          searchkey,
+          setSearchkey,
+          filterType,
+          setFilterType,
+          filterPrice,
+          setFilterPrice,
         }}
       >
         {props.children}

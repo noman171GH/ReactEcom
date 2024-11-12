@@ -4,10 +4,20 @@ import { Fragment, useState } from "react";
 // React Fragment is a feature in React that allows you to return multiple elements from a React component
 // by allowing you to group a list of children without adding extra nodes (div) to the DOM.
 
-export default function Modal() {
+// Recvng it all as Props in destructured form
+export default function Modal({
+  name,
+  address,
+  pincode,
+  phoneNumber,
+  setName,
+  setAddress,
+  setPincode,
+  setPhoneNumber,
+  buyNow,
+}) {
   let [isOpen, setIsOpen] = useState(false);
 
-  //------these functions will set true/false value of isOpen -------------------------
   function closeModal() {
     setIsOpen(false);
   }
@@ -15,20 +25,18 @@ export default function Modal() {
   function openModal() {
     setIsOpen(true);
   }
-  // ------------------------------------------------------------------------------------------------
 
+  // console.log(name,address,pincode,phoneNumber)
   return (
     <>
       <div className="  text-center rounded-lg text-white font-bold">
-        {/* ------------------this button will be visible on Cart.jsx and willuse to open  the window of modal----------------------------  */}
         <button
           type="button"
           onClick={openModal}
-          className="w-full  bg-pink-600 py-2 text-center rounded-lg text-white font-bold bg-pink-600"
+          className="w-full  bg-violet-600 py-2 text-center rounded-lg text-white font-bold"
         >
           Buy Now
         </button>
-        {/* -------------------------------------------------------------------------------------------------- */}
       </div>
 
       <Transition appear show={isOpen} as={Fragment}>
@@ -59,6 +67,10 @@ export default function Modal() {
                 <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl p-2  text-left align-middle shadow-xl transition-all bg-gray-50">
                   <section className="">
                     <div className="flex flex-col items-center justify-center py-8 mx-auto  lg:py-0">
+                      {/* <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
+                                              <img className="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="logo" />
+                                              Flowbite
+                                          </a> */}
                       <div className="w-full  rounded-lg md:mt-0 sm:max-w-md xl:p-0 ">
                         <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
                           <form className="space-y-4 md:space-y-6" action="#">
@@ -70,6 +82,8 @@ export default function Modal() {
                                 Enter Full Name
                               </label>
                               <input
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
                                 type="name"
                                 name="name"
                                 id="name"
@@ -85,6 +99,8 @@ export default function Modal() {
                                 Enter Full Address
                               </label>
                               <input
+                                value={address}
+                                onChange={(e) => setAddress(e.target.value)}
                                 type="text"
                                 name="address"
                                 id="address"
@@ -100,6 +116,8 @@ export default function Modal() {
                                 Enter Pincode
                               </label>
                               <input
+                                value={pincode}
+                                onChange={(e) => setPincode(e.target.value)}
                                 type="text"
                                 name="pincode"
                                 id="pincode"
@@ -115,6 +133,8 @@ export default function Modal() {
                                 Enter Mobile Number
                               </label>
                               <input
+                                value={phoneNumber}
+                                onChange={(e) => setPhoneNumber(e.target.value)}
                                 type="text"
                                 name="mobileNumber"
                                 id="mobileNumber"
@@ -123,16 +143,17 @@ export default function Modal() {
                               />
                             </div>
                           </form>
-
-                          {/* ------------------This Button will close the Modal Window---------------------------------------------------------------------- */}
                           <button
-                            onClick={closeModal}
+                            onClick={() => {
+                              buyNow();
+                              closeModal();
+                              
+                            }}
                             type="button"
-                            className="focus:outline-none w-full text-white bg-pink-600 bg-pink-600 hover:bg-green-800  outline-0 font-medium rounded-lg text-sm px-5 py-2.5 "
+                            className="focus:outline-none w-full text-white bg-violet-600 hover:bg-violet-800  outline-0 font-medium rounded-lg text-sm px-5 py-2.5 "
                           >
                             Order Now
                           </button>
-                          {/* ---------------------------------------------------------------------------------------------- */}
                         </div>
                       </div>
                     </div>

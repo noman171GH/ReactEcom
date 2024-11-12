@@ -3,7 +3,16 @@ import MyContext from "../../context/data/MyContext";
 
 function Filter() {
   const context = useContext(MyContext);
-  const { mode } = context;
+  const {
+    mode,
+    searchkey,
+    setSearchkey,
+    filterType,
+    setFilterType,
+    filterPrice,
+    setFilterPrice,
+    product,
+  } = context;
 
   return (
     <div>
@@ -29,6 +38,8 @@ function Filter() {
             <input
               type="text"
               name="searchkey"
+              value={searchkey}
+              onChange={(e) => setSearchkey(e.target.value)}
               id="searchkey"
               placeholder="Search here"
               className="px-8 py-3 w-full rounded-md bg-violet-0 border-transparent outline-0 text-sm"
@@ -50,28 +61,30 @@ function Filter() {
           <div>
             <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 mt-4">
               <select
+                value={filterType}
+                onChange={(e) => setFilterType(e.target.value)}
                 className="px-4 py-3 w-full rounded-md bg-gray-50 border-transparent outline-0 focus:border-gray-500 focus:bg-white focus:ring-0 text-sm"
                 style={{
                   backgroundColor: mode === "dark" ? "rgb(64 66 70)" : "",
                   color: mode === "dark" ? "white" : "",
                 }}
               >
-                <option value="Jacket">Jacket</option>
-                <option value="Shirt">shirt</option>
-                <option value="Mobile">mobile</option>
-                <option value="Shoes">Shoes</option>
+                {product.map((item, index) => {
+                  return <option value={item.category}>{item.category}</option>;
+                })}
               </select>
               <select
+                value={filterPrice}
+                onChange={(e) => setFilterPrice(e.target.value)}
                 className="px-4 py-3 w-full rounded-md bg-gray-50 border-transparent outline-0  focus:border-gray-500 focus:bg-white focus:ring-0 text-sm"
                 style={{
                   backgroundColor: mode === "dark" ? "rgb(64 66 70)" : "",
                   color: mode === "dark" ? "white" : "",
                 }}
               >
-                <option value="100">100</option>
-                <option value="200">200</option>
-                <option value="300">300</option>
-                <option value="400">400</option>
+                {product.map((item, index) => {
+                  return <option value={item.price}>{item.price}</option>;
+                })}
               </select>
             </div>
           </div>
